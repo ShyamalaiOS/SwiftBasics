@@ -11,6 +11,8 @@ import Foundation
     - it provided only Classes and Struct
     - if we created instance of strucure and assign as to Constant, we cant modify that instance property
  
+   - Lazy can be used
+ 
  
     
 */
@@ -25,6 +27,7 @@ print("The Person name is \(person.name)")
 struct Employee{
     let name : String // Constant Stored Property
     var email : String // Variable Stored Property
+    lazy var phone : String = "990099888" // Lazy store Property
 }
 
 let emp = Employee(name: "Shyamala", email: "Shyamala@maang.com")
@@ -73,7 +76,15 @@ struct Rectangle{
     var len : Double
     var width : Double
     
-    var perimeter : Double{
+//    lazy var perimeter : Double{
+//        get{
+//            return (2*(len+width))
+//        }set(newPerimeter){
+//            len = (newPerimeter - width)/2
+//        }
+//    }
+    
+     var perimeter : Double{
         get{
             return (2*(len+width))
         }set(newPerimeter){
@@ -135,7 +146,7 @@ struct Fahrenheit {
 
 
 struct SomeStructure {
-    static var storedTypeProperty = "Some value."
+    static let storedTypeProperty = "Some value."
     static var computedTypeProperty: Int {
         return 1
     }
