@@ -4,5 +4,6 @@
         <page name='SwiftProperty'/>
         <page name='Protocols'/>
         <page name='Initializer'/>
+        <page name='HigherOrderFunc'/>
     </pages>
 </playground>
