@@ -22,7 +22,7 @@ class SomeSubClass : SomeSuperClass,SomeProtocol{
 /*
  Property
  ---------
-   - Protocol Required any type of instance and Type Property with particula name and type
+   - Protocol Required any type of instance and Type Property with particular name and type
    - The protocol doesn’t specify whether the property should be a stored property or a computed property
    - protocol also specifies whether each property must be gettable or gettable and settable
  
@@ -43,9 +43,9 @@ struct BasicStruct : BasicProtocol{
     
     var instanceProperty: Int
     
-    var storedProperty: Int  // stored property
+    var storedProperty: Int = 0 // stored property
     
-//    var storedProperty: Int = 0{  // here we make it as red only computed property
+//    var storedProperty: Int {  // here we make it as red only computed property
 //        return instanceProperty
 //    }
     
@@ -130,3 +130,54 @@ enum OnOffSwitch : Togglable{
 var lightSwitch = OnOffSwitch.on
 lightSwitch.toggle()
 print("Switch Status",lightSwitch)
+
+
+
+/*
+ Initialize :
+ ------------
+    - Protocol initializer to implemented by conforming type.
+    - you must initialize this as part of protocal definition as like normal initialize without specifing curly brace
+    - You can implement a protocol initializer requirement on a conforming class as either a designated initializer or a convenience initializer.
+    - in both designated and convenience initializer we need required modifier
+    - required modifier ensures that you provide an explicit or inherited implementation of the initializer
+    -The use of the required modifier ensures that you provide an explicit or inherited
+ */
+
+protocol InitProtocl{
+    init(param : String)
+    init(paramList : [String])
+//    convenience init(paramList : [String])
+}
+
+class InitClass : InitProtocl{
+    required init(param: String) {
+       
+    }
+    required convenience init(paramList: [String]) {
+        self.init(param: paramList[0])
+    }
+}
+
+protocol SomeInitProtocol {
+    init()
+}
+
+
+final class SomeInitSuperClass : SomeInitProtocol {
+    init() {
+        // initializer implementation goes here
+    }
+}
+
+class OverrideInitSuperClass {
+    init(){}
+}
+
+class OverrideInitSubclass : OverrideInitSuperClass,SomeInitProtocol{
+    required override init(){}
+}
+
+//class someInitSubclass : SomeInitSuperClass{  // **Inheritance from a final class 'SomeInitSuperClass'
+//
+//}

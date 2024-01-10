@@ -3,6 +3,6 @@
     <pages>
         <page name='SwiftProperty'/>
         <page name='Protocols'/>
-        <page name='ProtocolFeature'/>
+        <page name='Initializer'/>
     </pages>
 </playground>
