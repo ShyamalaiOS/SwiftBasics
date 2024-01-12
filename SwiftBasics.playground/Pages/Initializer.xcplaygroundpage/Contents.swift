@@ -167,9 +167,152 @@ print(subClasObjs.total)
 let subClasObjss = SubClassB(adds:20)
 print(subClasObjss.total)
 
+
+
 /*
  Two-Phase Initialization
  ------------------------
     
  */
+
+
+/*
+ Failable Init
+ =============
+ It’s sometimes useful to define a class, structure, or enumeration for which initialization can fail
+ 
+ This is a failable initializer: an initializer that might work or might not. You can write these in your own structs and classes by using init?() rather than init(), and return nil if something goes wrong.
+ 
+ A failable initializer creates an optional value of the type it initializes
+ 
+ You write return nil within a failable initializer to indicate a point at which initialization failure can be triggered.
+ 
+ 
+ 
+ */
+
+struct Person{
+    var id : String
+    init?(id : String){
+        if (id == "")
+        {
+           return nil
+        }else{
+            self.id = "Hello \(id)"
+        }
+    }
+}
+
+var personID  = Person(id: "s")
+print(personID?.id ?? "")
+
+
+enum Temperature {
+    case kelvin,ferhanhiet,celcius
+    init?(symbol : Character){
+        switch symbol{
+        case  "F" :
+            self = .ferhanhiet
+        case "K" :
+            self = .kelvin
+        case "C" :
+            self = .celcius
+        default :
+            return nil
+        }
+    }
+}
+
+let tempdata = Temperature(symbol: "K")
+print("Temparature Value is",tempdata)
+
+let tempdatanil = Temperature(symbol: " ")
+print("Temparature Value is",tempdatanil)
+
+//
+//enum TemperatureRaw : Character{
+//    case kelvin,ferhanhiet,celcius
+//}
+//let tempRaw = TemperatureRaw(rawValue: "S")
+//print("Temparature Value is",tempRaw)
+
+
+/*
+ Propagation of Initialization Failure
+ -------------------------------------
+ A failable initializer of a class, structure, or enumeration can delegate across to another failable initializer from the same class, structure, or enumeration. Similarly, a subclass failable initializer can delegate up to a superclass failable initializer.
+ */
+
+class Product {
+    let name: String
+    init?(name: String) {
+        if name.isEmpty { return nil }
+        self.name = name
+    }
+}
+
+
+class CartItem: Product {
+    let quantity: Int
+    init?(name: String, quantity: Int) {
+        if quantity < 1 { return nil }
+        self.quantity = quantity
+        super.init(name: name)
+    }
+}
+
+if let twoSocks = CartItem(name: "sock", quantity: 2) {
+    print("Item: \(twoSocks.name), quantity: \(twoSocks.quantity)")
+}
+
+
+/*
+ Required Initializers
+ ---------------------
+    required modifier before the definition of a class initialize to indicate that every subclass of the class must implement that iniializer
+ 
+ */
+
+class SomeInitSuperClass{
+    required init(){
+        print("Hello Required init")
+    }
+}
+
+class SomeSubClass : SomeInitSuperClass{
+    
+}
+
+let reqInit = SomeSubClass() // here super class required init call automatically
+
+
+class ClassA{
+    required init(){
+        print("Hello Class A")
+    }
+}
+
+class ClassB:ClassA{
+    required init() {
+        print("Hello Class B")
+    }
+}
+
+
+let clasObj = ClassB() // here all required init will call no need of super.init() to call super class initializer
+
+class ClassAParam{
+   required init(_ msg : String){
+        print("Hello Message",msg)
+    }
+}
+
+class ClassBParam : ClassAParam{
+    required init(_ subclassMsg : String){
+        print("Subclass message")
+        super.init("Hello super class")  // for parameterize init all we should call baseclass required init with super.init() fun
+    }
+}
+
+let objMsg = ClassBParam("Hello EveryOne")
 //: [Next](@next)
